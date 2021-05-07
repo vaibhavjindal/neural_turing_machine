@@ -18,7 +18,7 @@ The training code for the Copy-Task is present in `train_copy.py`. Use the follo
 ```
 python3 train_copy.py
 ```
-The default hyperparameters of the model have been set such that the model converges perfectly. A checkpoint of the current state of the model is automatically saved after every 5000 epochs. The final training information and the model weights can be retriebed from the last checkpoint. In order to play with the hyperparameters, one can use the following command to have a look at the usage of `train_copy.py`, and make changes accordingly:
+The default hyperparameters of the model have been set such that the model converges perfectly. A checkpoint of the current state of the model is automatically saved after every 5000 epochs. The final training information and the model weights can be retrieved from the last checkpoint. In order to play with the hyperparameters, one can use the following command to have a look at the usage of `train_copy.py`, and make changes accordingly:
 ```
 python3 train_copy.py -h
 ```
@@ -42,4 +42,19 @@ python3 evaluate.py --checkpoint_path ./checkpoints/copy-task-1000-batch-50000.m
 ```
 `./checkpoints/copy-task-1000-batch-50000.model` contains the model weights of a model trained with 50,000 batches. To use any other model, the path can be appropriately changed. Use `-h` option to see the other hyperparametrs.
 
- Note: Model-specific hyperparameters such as the controller size, memory size etc, should be the same for the `train_copy.py` and `evaluate.py` so that the stored weights can be successfully loaded during evaluation.
+**Note**: Model-specific hyperparameters such as the controller size, memory size etc, should be the same for the `train_copy.py` and `evaluate.py` so that the stored weights can be successfully loaded during evaluation.
+
+Here are some of the images produced by `evaluate.py` using the stored weights:
+#### Target and Output of the NTM for sequence_length = 30
+Target Sequence
+![target_30](./results/target_len_30.png)
+Output Sequence
+![out_30](./results/output_len_30.png)  
+#### Target and Output of the NTM for sequence_length = 50
+Target Sequence
+![target_50](./results/target_len_50.png)
+Output Sequence
+![out_50](./results/output_len_50.png)
+
+## Acknowledgement
+This work has been inspired by this excellent implementation([https://github.com/loudinthecloud/pytorch-ntm.git](https://github.com/loudinthecloud/pytorch-ntm.git)). Some compenents of the code such as the LSTMController and some other functions have been directly taken from here and that code has been appropriately annotated in comments. The default hyperparameters in `train_copy.py` have also been obtained from this repository only.
