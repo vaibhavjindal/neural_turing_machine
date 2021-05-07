@@ -47,14 +47,28 @@ python3 evaluate.py --checkpoint_path ./checkpoints/copy-task-1000-batch-50000.m
 Here are some of the images produced by `evaluate.py` using the stored weights:
 #### Target and Output of the NTM for sequence_length = 30
 Target Sequence
+
+
 ![target_30](./results/target_len_30.png)
+
+
+
 Output Sequence
+
+
 ![out_30](./results/output_len_30.png)  
 #### Target and Output of the NTM for sequence_length = 50
 Target Sequence
+
+
 ![target_50](./results/target_len_50.png)
+
+
 Output Sequence
+
 ![out_50](./results/output_len_50.png)
+
+These results show that our model has learned the copy-task well as it was trained only on random sequences of length 1-20, but it does perform nicely on inputs of lengths 30 and 50 as well.
 
 ## Acknowledgement
 This work has been inspired by this excellent implementation([https://github.com/loudinthecloud/pytorch-ntm.git](https://github.com/loudinthecloud/pytorch-ntm.git)). Some compenents of the code such as the LSTMController and some other functions have been directly taken from here and that code has been appropriately annotated in comments. The default hyperparameters in `train_copy.py` have also been obtained from this repository only.
