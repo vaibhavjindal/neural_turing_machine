@@ -144,7 +144,7 @@ def train_copy_task(args):
 def init_arguments():
     parser = argparse.ArgumentParser(prog='train.py')
     parser.add_argument('--seed', type=int, default=1000, help="Seed value")
-    parser.add_argument('--checkpoint-interval', type=int, default=1000,
+    parser.add_argument('--checkpoint-interval', type=int, default=5000,
                         help="Checkpoint interval (default: 1000). Use 0 to disable checkpointing")
     parser.add_argument('--checkpoint-path', action='store', default='./',
                         help="Path for saving checkpoint data (default: './')")
@@ -158,7 +158,7 @@ def init_arguments():
     parser.add_argument('--sequence_max_len',default=20, type=int)
     parser.add_argument('--memory_n',default=128, type=int)
     parser.add_argument('--memory_m',default=20, type=int)
-    parser.add_argument('--num_batches',default=4000, type=int)
+    parser.add_argument('--num_batches',default=50000, type=int)
     parser.add_argument('--batch_size',default=1, type=int)
     parser.add_argument('--rmsprop_lr',default=1e-4, type=float)
     parser.add_argument('--rmsprop_momentum',default=0.9, type=float)

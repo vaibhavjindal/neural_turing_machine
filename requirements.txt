@@ -1,4 +1,6 @@
 argcomplete
 numpy
-pytest
-
+torch
+argparse
+argcomplete
+matplotlib
