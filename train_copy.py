@@ -44,45 +44,6 @@ def clip_grads(net):
         p.grad.data.clamp_(-10, 10)
 
 
-def evaluate(net, criterion, X, Y):
-    """Evaluate a single batch (without training)."""
-    inp_seq_len = X.size(0)
-    outp_seq_len, batch_size, _ = Y.size()
-
-    # New sequence
-    net.init_sequence(batch_size)
-
-    # Feed the sequence + delimiter
-    states = []
-    for i in range(inp_seq_len):
-        o, state = net(X[i])
-        states += [state]
-
-    # Read the output (no input given)
-    y_out = torch.zeros(Y.size())
-    for i in range(outp_seq_len):
-        y_out[i], state = net()
-        states += [state]
-
-    loss = criterion(y_out, Y)
-
-    y_out_binarized = y_out.clone().data
-    y_out_binarized.apply_(lambda x: 0 if x < 0.5 else 1)
-
-    # The cost is the number of error bits per sequence
-    cost = torch.sum(torch.abs(y_out_binarized - Y.data))
-
-    result = {
-        'loss': loss.data[0],
-        'cost': cost / batch_size,
-        'y_out': y_out,
-        'y_out_binarized': y_out_binarized,
-        'states': states
-    }
-
-    return result
-
-
 def train_copy_task(args):
 
     #set all seeds to same value
@@ -99,7 +60,6 @@ def train_copy_task(args):
     #our network
     net = NTM(args.sequence_width + 1, args.sequence_width,
                               args.controller_size, args.controller_layers,
-                              args.num_heads,
                               args.memory_n, args.memory_m)
 
     #data_loader
@@ -134,7 +94,7 @@ def train_copy_task(args):
         outp_seq_len, batch_size, _ = out.size()
 
         # New sequence
-        net.init_sequence(batch_size)
+        net.initialize(batch_size)
 
         # Feed the sequence + delimiter
         for i in range(inp_seq_len):
@@ -183,7 +143,7 @@ def train_copy_task(args):
 
 def init_arguments():
     parser = argparse.ArgumentParser(prog='train.py')
-    parser.add_argument('--seed', type=int, default=1000, help="Seed value for RNGs")
+    parser.add_argument('--seed', type=int, default=1000, help="Seed value")
     parser.add_argument('--checkpoint-interval', type=int, default=1000,
                         help="Checkpoint interval (default: 1000). Use 0 to disable checkpointing")
     parser.add_argument('--checkpoint-path', action='store', default='./',
@@ -193,7 +153,6 @@ def init_arguments():
     parser.add_argument('--task_name',default="copy-task",type=str)
     parser.add_argument('--controller_size',default=100, type=int)
     parser.add_argument('--controller_layers',default=1,type=int)
-    parser.add_argument('--num_heads',default=1, type=int)
     parser.add_argument('--sequence_width',default=8, type=int)
     parser.add_argument('--sequence_min_len',default=1,type=int)
     parser.add_argument('--sequence_max_len',default=20, type=int)
