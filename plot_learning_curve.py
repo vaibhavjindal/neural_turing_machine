@@ -4,9 +4,19 @@ This file plots the learning curves for a particular json file
 import matplotlib.pyplot as plt
 import numpy as np
 import json
+import argparse
 
-batch_num = 50000
-json_file_path = "./checkpoints/copy-task-1000-batch-50000.json"
+def init_arguments():
+    parser = argparse.ArgumentParser(prog='plot_learning_curve.py')
+    parser.add_argument('--json_path', default="./checkpoints/copy-task-1000-batch-50000.json",
+                        help="Path for retrieving checkpoint data")
+    args = parser.parse_args()
+    return args
+
+args = init_arguments()
+
+json_file_path = args.json_path
+batch_num = int((json_file_path.split("-")[-1]).split(".")[0])
 files = [json_file_path]
 
 
@@ -29,7 +39,7 @@ fig = plt.figure(figsize=(12, 5))
 x = np.arange(dv / 1000, (batch_num / 1000) + (dv / 1000), dv / 1000)
 
 # Plot the cost per sequence curve
-plt.plot(x, training_mean[0], 'o-', linewidth=2, label='Cost')
+plt.plot(x, training_mean[0], 'o-', label='Cost')
 plt.ylabel('Cost per sequence (bits)')
 plt.xlabel('Sequence (thousands)')
 plt.title('Training Convergence', fontsize=16)
@@ -38,7 +48,7 @@ plt.close()
 
 
 # Plot the bce loss per sequence curve
-plt.title("BCELoss")
+plt.title("BCELoss", fontsize=16)
 plt.ylabel('BCE loss per sequence')
 plt.xlabel('Sequence (thousands)')
 plt.plot(x, training_mean[1], 'r-', label='BCE Loss')
