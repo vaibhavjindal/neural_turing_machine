@@ -48,7 +48,9 @@ def dataloader_repeat_copy(num_batches,
                             seq_min_len,
                             seq_max_len,
                             repeat_min,
-                            repeat_max):
+                            repeat_max,
+                            reps_mean = None,
+                            reps_std = None):
     """Generator of random sequences for the repeat copy task.
     Creates random batches of "bits" sequences.
     All the sequences within each batch have the same length.
@@ -68,9 +70,10 @@ def dataloader_repeat_copy(num_batches,
     network counted correctly.
     """
     # Some normalization constants
-    reps_mean = (repeat_max + repeat_min) / 2
-    reps_var = (((repeat_max - repeat_min + 1) ** 2) - 1) / 12
-    reps_std = np.sqrt(reps_var)
+    if (reps_std is None) or (reps_mean is None):
+        reps_mean = (repeat_max + repeat_min) / 2
+        reps_var = (((repeat_max - repeat_min + 1) ** 2) - 1) / 12
+        reps_std = np.sqrt(reps_var)
 
 
     for batch in range(num_batches):
