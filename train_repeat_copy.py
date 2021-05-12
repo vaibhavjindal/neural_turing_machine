@@ -143,8 +143,8 @@ def train_repeat_copy_task(args):
 
 
 def init_arguments():
-    parser = argparse.ArgumentParser(prog='train.py')
-    parser.add_argument('--seed', type=int, default=1000, help="Seed value")
+    parser = argparse.ArgumentParser(prog='train_repeat_copy.py')
+    parser.add_argument('--seed', type=int, default=1, help="Seed value")
     parser.add_argument('--checkpoint-interval', type=int, default=10000,
                         help="Checkpoint interval (default: 1000). Use 0 to disable checkpointing")
     parser.add_argument('--checkpoint-path', action='store', default='./',
