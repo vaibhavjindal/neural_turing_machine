@@ -54,7 +54,7 @@ def evaluate(net, criterion, X, Y):
 
 def init_arguments():
     parser = argparse.ArgumentParser(prog='evaluate.py')
-    parser.add_argument('--checkpoint_path', action='store', default="./repeat-copy-task-1000-batch-50000.model",
+    parser.add_argument('--checkpoint_path', action='store', default="./checkpoints/repeat-copy-task-100-batch-100000.model",
                         help="Path for retrieving checkpoint data")
     parser.add_argument('--seq_len',default=10, type=int)
     parser.add_argument('--rep_len',default=10,type=int)
